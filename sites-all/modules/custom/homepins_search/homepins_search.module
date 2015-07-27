@@ -4,7 +4,7 @@
  * Implements hook_form_alter().
  */
 function homepins_search_form_alter(&$form, &$form_state, $form_id){
-  //dpm($form_id);
+  //dpm($form, $form_id);
 }
 
 /**
