@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * Implements hook_form_alter().
+ */
+function homepins_search_form_alter(&$form, &$form_state, $form_id){
+  //dpm($form_id);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function homepins_search_form_views_exposed_form_alter(&$form, &$form_state, $form_id) {
+  $view_name = $form_state['view']->name;
+  switch($view_name) {
+    case 'search':
+
+      // Hide the fields we don't want to see.
+      $form['desc']['#type'] = 'hidden';
+      $form['category']['#type'] = 'hidden';
+
+      // Hide the labels.
+      $form['#info']['filter-field_description_value']['label'] = '';
+      $form['#info']['filter-name']['label'] = '';
+      $form['#info']['filter-title']['label'] = '';
+
+      // Keep track of the form field that is left visible.
+      $form_state['homepins_search_exposed_filters_search_field'] = 'name';
+      // Keep track of the form fields that are hidden.
+      $form_state['homepins_search_exposed_filters_hidden_fields'] = array(
+        'desc',
+        'category',
+      );
+
+      // Add the custom submit handler as the first submit function to run.
+      array_unshift($form['#submit'], '_homepins_search_views_search_filter');
+      // Add a custom submit handler to run post filtering
+    break;
+
+  }
+}
+
+/**
+ * Fill out the hidden fields with the search string.
+ */
+function _homepins_search_views_search_filter($form, &$form_state) {
+  // Get the search string submitted by the user.
+  $search = $form_state['values'][$form_state['homepins_search_exposed_filters_search_field']];
+
+  // Assign the search string to the appropriate hidden fields.
+  $hidden_fields = $form_state['homepins_search_exposed_filters_hidden_fields'];
+  foreach ($hidden_fields as $hidden) {
+    $form_state['values'][$hidden] = $search;
+  }
+}
