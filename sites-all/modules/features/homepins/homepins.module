@@ -5,3 +5,70 @@
  */
 
 include_once 'homepins.features.inc';
+
+/**
+ * Implements hook_form_alter().
+ */
+function homepins_form_alter(&$form, &$form_state, $form_id) {
+  //dpm($form, $form_id);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function homepins_form_board_node_form_alter(&$form, &$form_state, $form_id) {
+  $form['title']['#element_validate'][] = 'homepins_node_title_unique_validate';
+}
+
+/**
+ * Validate the uniqueness of the node title.
+ */
+function homepins_node_title_unique_validate($element, &$form_state, $form) {
+
+  // Get the submitted node title value.
+  $value = $element['#value'];
+
+  // The type of node to check on uniqueness.
+  $node_bundle = FALSE;
+  //$node_bundle = $form_state['node']->type;
+
+  // Need for PART TWO: in re-use by custom form
+  if (!empty($form_state['node'])) {
+    $node_bundle = $form_state['node']->type;
+  }
+  // Check the element for the node bundle.
+  // *** Use a hashed name for 'homepins_node_bundle',
+  //     otherwise Drupal will think it's a form field and try to evaluate it.
+  elseif (!empty($element['#homepins_node_bundle'])) {
+    $node_bundle = $element['#homepins_node_bundle'];
+  }
+
+  // Need for PART TWO: in re-use by custom form
+  if (empty($node_bundle)) {
+    drupal_set_message(t('Could not determine how to validate the name of the content'), 'warning', FALSE);
+    return;
+  }
+
+  // Check the submitted title against existing nodes.
+  $query = new EntityFieldQuery();
+  $results = $query
+    ->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', $node_bundle)
+    ->propertyCondition('title', $value)
+    ->execute();
+
+  // If has results, submit an error.
+  if (!empty($results)) {
+
+    // Setup t() array of substitutions for the error message.
+    $substitutions = array(
+      // In the real world, we would look up the node bundle's name
+      // and put that here. For brevity, the machine_name of the bundle is fine.
+      '@type' => $node_bundle,
+      '%title' => $value,
+    );
+
+    // Use form_error() instead of form_set_error() b/c we have the $element.
+    form_error($element, t('A @type called %title already exists.', $substitutions));
+  }
+}

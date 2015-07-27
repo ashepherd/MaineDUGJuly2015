@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the Home Pins feature.
- */
-
-include_once 'homepins.features.inc';
