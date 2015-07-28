@@ -140,6 +140,7 @@ function homepins_node_title_unique_validate($element, &$form_state, $form) {
     ->entityCondition('entity_type', 'node')
     ->entityCondition('bundle', $node_bundle)
     ->propertyCondition('title', $value)
+    ->propertyCondition('status', 1)
     ->execute();
 
   // If has results, submit an error.
