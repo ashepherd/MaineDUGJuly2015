@@ -140,7 +140,6 @@ function _homepins_search_create_saved_search_submit($form, &$form_state) {
  *
  */
 function _homepins_search_saved_search_autocomplete($string) {
-  global $user;
 
   $result = db_select('field_data_field_search_query', 'q')
     ->fields('q', array('field_search_query_value'))

@@ -27,7 +27,7 @@ function homepins_search_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 1,
     'expanded' => 1,
-    'weight' => 10,
+    'weight' => -47,
     'customized' => 1,
   );
 

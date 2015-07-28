@@ -20,7 +20,7 @@ function homepins_menu_default_menu_links() {
       'identifier' => 'main-menu_categories:categories',
     ),
     'module' => 'system',
-    'hidden' => 0,
+    'hidden' => 1,
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
@@ -126,7 +126,7 @@ function homepins_menu_default_menu_links() {
       'attributes' => array(
         'title' => '',
       ),
-      'alter' => TRUE,
+      'alter' => FALSE,
       'identifier' => 'user-menu_current-username:menutoken/55b4f40b903c8',
     ),
     'module' => 'menu',

@@ -11,8 +11,8 @@ function pin_url_menu() {
   $items['create/pin-from-url'] = array(
     'type' => MENU_NORMAL_ITEM,
     'menu_name' => 'user-menu',
-    'title' => 'Pin from Website',
-    'description' => 'Create a Pin from a Website',
+    'title' => t('Pin from Website'),
+    'description' => t('Create a Pin from a Website'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('pin_url_create_form'),
     'access arguments' => array('create pin content'),
