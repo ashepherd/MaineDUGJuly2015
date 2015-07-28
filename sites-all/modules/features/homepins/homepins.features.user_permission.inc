@@ -314,26 +314,6 @@ function homepins_user_default_permissions() {
     'module' => 'taxonomy',
   );
 
-  // Exported permission: 'entityconnect add button'.
-  $permissions['entityconnect add button'] = array(
-    'name' => 'entityconnect add button',
-    'roles' => array(
-      'Pinner' => 'Pinner',
-      'administrator' => 'administrator',
-    ),
-    'module' => 'entityconnect',
-  );
-
-  // Exported permission: 'entityconnect edit button'.
-  $permissions['entityconnect edit button'] = array(
-    'name' => 'entityconnect edit button',
-    'roles' => array(
-      'Pinner' => 'Pinner',
-      'administrator' => 'administrator',
-    ),
-    'module' => 'entityconnect',
-  );
-
   // Exported permission: 'notify of path changes'.
   $permissions['notify of path changes'] = array(
     'name' => 'notify of path changes',

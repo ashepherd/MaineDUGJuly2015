@@ -637,7 +637,6 @@ function homepins_views_default_views() {
   $handler->display->display_options['query']['options']['pure_distinct'] = TRUE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Search';
-  $handler->display->display_options['exposed_form']['options']['reset_button'] = TRUE;
   $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Start Over';
   $handler->display->display_options['exposed_form']['options']['expose_sort_order'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'infinite_scroll';
@@ -648,12 +647,22 @@ function homepins_views_default_views() {
   $handler->display->display_options['style_plugin'] = 'grid';
   $handler->display->display_options['row_plugin'] = 'node';
   $handler->display->display_options['row_options']['links'] = FALSE;
-  /* Relationship: Keywords */
+  /* Header: Global: Result summary */
+  $handler->display->display_options['header']['result']['id'] = 'result';
+  $handler->display->display_options['header']['result']['table'] = 'views';
+  $handler->display->display_options['header']['result']['field'] = 'result';
+  $handler->display->display_options['header']['result']['content'] = 'Found @total items';
+  /* Footer: Global: Result summary */
+  $handler->display->display_options['footer']['result']['id'] = 'result';
+  $handler->display->display_options['footer']['result']['table'] = 'views';
+  $handler->display->display_options['footer']['result']['field'] = 'result';
+  $handler->display->display_options['footer']['result']['content'] = '@total items';
+  /* Relationship: Categories */
   $handler->display->display_options['relationships']['term_node_tid']['id'] = 'term_node_tid';
   $handler->display->display_options['relationships']['term_node_tid']['table'] = 'node';
   $handler->display->display_options['relationships']['term_node_tid']['field'] = 'term_node_tid';
-  $handler->display->display_options['relationships']['term_node_tid']['ui_name'] = 'Keywords';
-  $handler->display->display_options['relationships']['term_node_tid']['label'] = 'keywords';
+  $handler->display->display_options['relationships']['term_node_tid']['ui_name'] = 'Categories';
+  $handler->display->display_options['relationships']['term_node_tid']['label'] = 'Categories';
   $handler->display->display_options['relationships']['term_node_tid']['vocabularies'] = array(
     'tags' => 'tags',
   );
@@ -839,42 +848,45 @@ function homepins_views_default_views() {
     3 => 0,
     4 => 0,
   );
-  /* Filter criterion: Keyword */
+  /* Filter criterion: Category */
   $handler->display->display_options['filters']['name']['id'] = 'name';
   $handler->display->display_options['filters']['name']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['filters']['name']['field'] = 'name';
   $handler->display->display_options['filters']['name']['relationship'] = 'term_node_tid';
-  $handler->display->display_options['filters']['name']['ui_name'] = 'Keyword';
+  $handler->display->display_options['filters']['name']['ui_name'] = 'Category';
   $handler->display->display_options['filters']['name']['group'] = 2;
   $handler->display->display_options['filters']['name']['exposed'] = TRUE;
   $handler->display->display_options['filters']['name']['expose']['operator_id'] = 'name_op';
-  $handler->display->display_options['filters']['name']['expose']['label'] = 'Keyword';
+  $handler->display->display_options['filters']['name']['expose']['label'] = 'Category';
   $handler->display->display_options['filters']['name']['expose']['operator'] = 'name_op';
-  $handler->display->display_options['filters']['name']['expose']['identifier'] = 'keyword';
+  $handler->display->display_options['filters']['name']['expose']['identifier'] = 'category';
+  $handler->display->display_options['filters']['name']['expose']['multiple'] = TRUE;
   $handler->display->display_options['filters']['name']['expose']['remember_roles'] = array(
     2 => '2',
     1 => 0,
     3 => 0,
     4 => 0,
   );
-  /* Filter criterion: Keyword Description */
-  $handler->display->display_options['filters']['description']['id'] = 'description';
-  $handler->display->display_options['filters']['description']['table'] = 'taxonomy_term_data';
-  $handler->display->display_options['filters']['description']['field'] = 'description';
-  $handler->display->display_options['filters']['description']['relationship'] = 'term_node_tid';
-  $handler->display->display_options['filters']['description']['ui_name'] = 'Keyword Description';
-  $handler->display->display_options['filters']['description']['operator'] = 'contains';
-  $handler->display->display_options['filters']['description']['group'] = 2;
-  $handler->display->display_options['filters']['description']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['description']['expose']['operator_id'] = 'description_op';
-  $handler->display->display_options['filters']['description']['expose']['label'] = 'Keyword Description';
-  $handler->display->display_options['filters']['description']['expose']['operator'] = 'description_op';
-  $handler->display->display_options['filters']['description']['expose']['identifier'] = 'keyword_desc';
-  $handler->display->display_options['filters']['description']['expose']['remember_roles'] = array(
-    2 => '2',
-    1 => 0,
-    3 => 0,
-    4 => 0,
+  $handler->display->display_options['filters']['name']['group_info']['label'] = 'Category';
+  $handler->display->display_options['filters']['name']['group_info']['identifier'] = 'category';
+  $handler->display->display_options['filters']['name']['group_info']['widget'] = 'radios';
+  $handler->display->display_options['filters']['name']['group_info']['multiple'] = TRUE;
+  $handler->display->display_options['filters']['name']['group_info']['group_items'] = array(
+    1 => array(
+      'title' => '',
+      'operator' => '=',
+      'value' => '',
+    ),
+    2 => array(
+      'title' => '',
+      'operator' => '=',
+      'value' => '',
+    ),
+    3 => array(
+      'title' => '',
+      'operator' => '=',
+      'value' => '',
+    ),
   );
   /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';

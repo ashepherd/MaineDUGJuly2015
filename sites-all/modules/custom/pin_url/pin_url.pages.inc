@@ -85,13 +85,14 @@ function pin_url_create_form($form, &$form_state) {
         foreach($images as $idx => $image_src) {
           $themed_images[$image_src] = pin_url_style_image($image_src);
         }
+        $default_image = !empty($form_state['storage']['values'][2]['image']) ? $form_state['storage']['values'][2]['image'] : '_none';
         $form['image'] = array(
           '#type' => 'radios',
           '#title' => t('Image for the Pin'),
           '#options' => $themed_images,
           '#description' => t('Select an image to represent this pin'),
           '#required' => TRUE,
-          '#default_value' => '_none',
+          '#default_value' => $default_image,
           '#weight' => 2,
         );
       }
@@ -162,6 +163,11 @@ function pin_url_create_form($form, &$form_state) {
       $form['field_board']['#weight'] = 4;
       $form['field_private']['#weight'] = 5;
       $form['field_description']['#weight'] = 6;
+      // Set the default values.
+      $form['title']['#default_value'] = !empty($form_state['storage']['values'][3]['title']) ? $form_state['storage']['values'][3]['title'] : '';
+      $form['field_board'][LANGUAGE_NONE]['#default_value'] = !empty($form_state['storage']['values'][3]['field_board'][LANGUAGE_NONE][0]['target_id']) ? $form_state['storage']['values'][3]['field_board'][LANGUAGE_NONE][0]['target_id'] : array();
+      $form['field_private'][LANGUAGE_NONE]['#default_value'] = !empty($form_state['storage']['values'][3]['field_private'][LANGUAGE_NONE][0]['value']) ? $form_state['storage']['values'][3]['field_private'][LANGUAGE_NONE][0]['value'] : 0;
+      $form['field_description'][LANGUAGE_NONE][0]['value']['#default_value'] = !empty($form_state['storage']['values'][3]['field_description'][LANGUAGE_NONE][0]['value']) ? $form_state['storage']['values'][3]['field_description'][LANGUAGE_NONE][0]['value'] : NULL;
 
       break;
 
