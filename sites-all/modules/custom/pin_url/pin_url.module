@@ -9,13 +9,27 @@
  */
 function pin_url_menu() {
   $items['create/pin-from-url'] = array(
-    'type' => MENU_CALLBACK,
-    'title' => 'Pin from URL',
-    'description' => 'Create a Pin from a URL',
+    'type' => MENU_NORMAL_ITEM,
+    'menu_name' => 'user-menu',
+    'title' => 'Pin from Website',
+    'description' => 'Create a Pin from a Website',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('pin_url_create_form'),
     'access arguments' => array('create pin content'),
     'file' => 'pin_url.pages.inc',
   );
   return $items;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function pin_url_theme() {
+  return array(
+    'pin_url_field' => array(
+      'variables' => array('title' => NULL, 'value' => NULL),
+      'file' => 'theme/preprocess.inc',
+      'template' => 'theme/pin_url_field',
+    ),
+  );
 }

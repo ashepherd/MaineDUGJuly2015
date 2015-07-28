@@ -93,7 +93,7 @@ function homepins_search_form_views_exposed_form_alter(&$form, &$form_state, $fo
     break;
 
   }
-  dpm($form_state);
+  //dpm($form_state);
 }
 
 /**
@@ -111,10 +111,8 @@ function _homepins_search_create_saved_search_submit($form, &$form_state) {
   $title = $form_state['values']['saved-search-title'];
   $search_string = $form_state['values']['name'];
   $node = _homepins_search_create_saved_search_node($title, $search_string);
-  dpm($node);
   // Save it to the form_state, just in case.
   $form_state['storage']['saved_search'] = $node;
-  dpm($form_state);
 }
 
 /**
@@ -123,7 +121,7 @@ function _homepins_search_create_saved_search_submit($form, &$form_state) {
  *
  */
 function _homepins_search_create_saved_search_node($title, $search_string) {
-  $node = _homepins_search_stub_node('saved_search');
+  $node = _homepins_stub_node('saved_search');
 
   // Save it to the Main Menu.
   $saved_searches_menu_link = _homepins_search_find_saved_searches_menu_link_item();
@@ -165,27 +163,6 @@ function _homepins_search_find_saved_searches_menu_link_item() {
   }
 
   return FALSE;
-}
-
-/**
- * Create a stub node object.
- *
- * @param string $bundle
- *   The type of node to create.
- *
- * @return object
- *   The stub node.
- */
-function _homepins_search_stub_node($bundle) {
-  global $user;
-
-  $node = new stdClass();
-  $node->type = $bundle;
-  $node->uid = $user->uid;
-  $node->language = LANGUAGE_NONE;
-  $node->name = $user->name;
-
-  return $node;
 }
 
 /**

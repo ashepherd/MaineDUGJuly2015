@@ -10,7 +10,7 @@ dependencies[] = ctools
 dependencies[] = devel
 dependencies[] = entity
 dependencies[] = entity_token
-dependencies[] = entityconnect
+;dependencies[] = entityconnect
 dependencies[] = entityreference
 dependencies[] = eva
 dependencies[] = fe_block
@@ -222,3 +222,6 @@ features[views_view][] = pins
 features[views_view][] = search
 features[views_view][] = your_boards
 features_exclude[dependencies][options] = options
+
+; CSS
+stylesheets[all][] = homepins.css

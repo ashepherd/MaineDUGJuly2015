@@ -10,14 +10,35 @@ include_once 'homepins.features.inc';
  * Implements hook_form_alter().
  */
 function homepins_form_alter(&$form, &$form_state, $form_id) {
-  dpm($form, $form_id);
 
-  if ($form['#node_edit_form']) {
+  // Using hook_form_alter to do something across multiple forms.
+  if (!empty($form['#node_edit_form'])) {
+    // If a node form, display some markup at the top.
     $form['homepins-message'] = array(
       '#markup' => '<div id="homepins-message">Some message for all nodes</div>',
       '#weight' => -999,
     );
+
+    // Custom validation handler.
+    //$form['#validate'][] = '_homepins_node_form_title_validate';
+    array_unshift($form['#validate'], '_homepins_node_form_title_validate');
+
     // Attach JS or CSS.
+
+  }
+  //dpm($form);
+  //dpm($form_state);
+}
+
+function _homepins_node_form_title_validate($form, &$form_state) {
+  dpm($form_state, 'form_state');
+
+  $string = $form_state['values']['title'];
+
+  // Check for non-ASCII chars.
+  $pattern = '/[^\x20-\x7f]/';
+  if (preg_match($pattern, $string)) {
+    form_set_error('title', t('Only ASCII text, please.'));
   }
 }
 
@@ -48,6 +69,7 @@ function homepins_form_pin_node_form_alter(&$form, &$form_state, $form_id) {
     }
   }
 
+  // ALTER SELECT OPTIONS.
   // Add the number of pins a board has to the select list of options.
   $boards = $form['field_board'][LANGUAGE_NONE]['#options'];
 
@@ -135,3 +157,25 @@ function homepins_node_title_unique_validate($element, &$form_state, $form) {
     form_error($element, t('A @type called %title already exists.', $substitutions));
   }
 }
+
+/**
+ * Create a stub node object.
+ *
+ * @param string $bundle
+ *   The type of node to create.
+ *
+ * @return object
+ *   The stub node.
+ */
+function _homepins_stub_node($bundle) {
+  global $user;
+
+  $node = new stdClass();
+  $node->type = $bundle;
+  $node->uid = $user->uid;
+  $node->language = LANGUAGE_NONE;
+  $node->name = $user->name;
+
+  return $node;
+}
+
